@@ -234,6 +234,7 @@ funResultTy :: TypeRep -> TypeRep -> Either TypeError TypeRep
 funResultTy (splitTyConApp -> (fc, [farg, fres])) x | fc == funTc = do
   s <- unify (alphaRename "f" farg) (alphaRename "x" x)
   return (normalize (subst s (alphaRename "f" fres)))
+funResultTy f@(isTypVar -> Just _) _ = return f
 funResultTy f _ =
   Left $ show f ++ " is not a function"
 
