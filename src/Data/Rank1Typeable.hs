@@ -105,6 +105,7 @@ import Data.Typeable (Typeable, mkTyCon3)
 import Data.Typeable.Internal (listTc, funTc, TyCon(TyCon), tyConName)
 import Data.Binary (Binary(get, put))
 import GHC.Fingerprint.Type (Fingerprint(..))
+import GHC.Exts(Any)
 import qualified Data.Typeable as Typeable
   ( TypeRep
   , typeOf
@@ -190,10 +191,10 @@ skolem = let (c, _) = splitTyConApp (typeOf (undefined :: Skolem V0)) in c
 -- Type variables                                                             --
 --------------------------------------------------------------------------------
 
-data TypVar a deriving Typeable
-data Skolem a deriving Typeable
-data Zero     deriving Typeable
-data Succ a   deriving Typeable
+newtype TypVar a = TypVar Any deriving Typeable
+data Skolem a                 deriving Typeable
+data Zero                     deriving Typeable
+data Succ a                   deriving Typeable
 
 type V0 = Zero
 type V1 = Succ V0
